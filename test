@@ -1,2 +1,0 @@
-#!/bin/sh
-./tools/compile && ./tools/ismultiboot build/myos.bin && ./tools/run

@@ -133,5 +133,5 @@ void kernel_main(void) {
 		terminal_writestring("Many lines\n");
 		terminal_writestring("Many lines\n");
 		terminal_writestring("Many lines\n");
-		terminal_writestring("This one scrolls\n");
+		terminal_writestring("This one scrolls A lot\n");
 }
