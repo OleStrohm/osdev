@@ -26,7 +26,11 @@ stack_top:
 _start:
 	movl $stack_top, %esp
 	
+	cli
+
 	call setupGDT
+
+	sti
 
 	# Call the global constructors.
 	call _init
