@@ -38,13 +38,29 @@ void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 	terminal_buffer[index] = vga_entry(c, color);
 }
 
+void terminal_scrollup(void) {
+	terminal_row--;
+	for(size_t i = 0; i < VGA_WIDTH*(VGA_HEIGHT-1); i++) {
+		terminal_buffer[i] = terminal_buffer[i+VGA_WIDTH];
+	}
+	uint16_t spacebar = vga_entry(' ', terminal_color);
+	for(size_t i = VGA_WIDTH*(VGA_HEIGHT-1); i < VGA_WIDTH*VGA_HEIGHT; i++) {
+		terminal_buffer[i] = spacebar; 
+	}
+}
+
 void terminal_putchar(char c) {
-	unsigned char uc = c;
-	terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
-	if (++terminal_column == VGA_WIDTH) {
+	if(c == '\n') {
 		terminal_column = 0;
 		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
+			terminal_scrollup();
+		return;
+	}
+	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
+	if (++terminal_column == VGA_WIDTH) {
+		terminal_column = 0;
+		if(++terminal_row == VGA_HEIGHT)
+			terminal_scrollup();
 	}
 }
 
