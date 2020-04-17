@@ -23,7 +23,7 @@ project "kernel"
 	kind "ConsoleApp"
 	language "C"
 	location "kernel"
-	linkoptions { "-T %{prj.location}/arch/i386/linker.ld" }
+	linkoptions { "-T %{prj.location}/arch/i386/linker.ld", "%{prj.location}/arch/i386/crtbegin.o %{prj.location}/arch/i386/crtend.o" }
 	prebuildcommands {
 		"mkdir -p %{wks.location}/sysroot/usr/include",
 		"cp -RT %{prj.location}/include %{wks.location}/sysroot/usr/include"

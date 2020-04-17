@@ -40,7 +40,7 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS += ../build/k/bin/Debug/libk.a
 LDDEPS += ../build/k/bin/Debug/libk.a
-ALL_LDFLAGS += $(LDFLAGS) --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -ffreestanding -O2 -nostdlib -lgcc -lk -T ./arch/i386/linker.ld
+ALL_LDFLAGS += $(LDFLAGS) --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -ffreestanding -O2 -nostdlib -lgcc -lk -T ./arch/i386/linker.ld ./arch/i386/crtbegin.o ./arch/i386/crtend.o
 LINKCMD = $(CC) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 	@echo Copying headers
