@@ -1,0 +1,670 @@
+
+working.kernel:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00100000 <deregister_tm_clones-0x10>:
+add    0x31bad(%eax),%dh
+add    %al,(%eax)
+sti    
+dec    %edi
+push   %edx
+in     $0x66,%al
+nop
+xchg   %ax,%ax
+
+00100010 <deregister_tm_clones>:
+mov    $0x101014,%eax
+cmp    $0x101014,%eax
+je     100040 <deregister_tm_clones+0x30>
+mov    $0x0,%eax
+test   %eax,%eax
+je     100040 <deregister_tm_clones+0x30>
+push   %ebp
+mov    %esp,%ebp
+sub    $0x14,%esp
+push   $0x101014
+call   *%eax
+add    $0x10,%esp
+leave  
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+xchg   %ax,%ax
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+
+00100050 <register_tm_clones>:
+mov    $0x101014,%eax
+sub    $0x101014,%eax
+mov    %eax,%edx
+shr    $0x1f,%eax
+sar    $0x2,%edx
+add    %edx,%eax
+sar    %eax
+je     100090 <register_tm_clones+0x40>
+mov    $0x0,%edx
+test   %edx,%edx
+je     100090 <register_tm_clones+0x40>
+push   %ebp
+mov    %esp,%ebp
+sub    $0x10,%esp
+push   %eax
+push   $0x101014
+call   *%edx
+add    $0x10,%esp
+leave  
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+
+001000a0 <__do_global_dtors_aux>:
+cmpb   $0x0,0x102000
+jne    100110 <__do_global_dtors_aux+0x70>
+push   %ebp
+mov    0x102004,%eax
+mov    %esp,%ebp
+push   %esi
+mov    $0x10100c,%esi
+push   %ebx
+mov    $0x101010,%ebx
+sub    $0x10100c,%ebx
+sar    $0x2,%ebx
+sub    $0x1,%ebx
+cmp    %ebx,%eax
+jae    1000e4 <__do_global_dtors_aux+0x44>
+lea    0x0(%esi),%esi
+add    $0x1,%eax
+mov    %eax,0x102004
+call   *(%esi,%eax,4)
+mov    0x102004,%eax
+cmp    %ebx,%eax
+jb     1000d0 <__do_global_dtors_aux+0x30>
+call   100010 <deregister_tm_clones>
+mov    $0x0,%eax
+test   %eax,%eax
+je     100102 <__do_global_dtors_aux+0x62>
+sub    $0xc,%esp
+push   $0x10085c
+call   0 <ALIGN-0x1>
+add    $0x10,%esp
+movb   $0x1,0x102000
+lea    -0x8(%ebp),%esp
+pop    %ebx
+pop    %esi
+pop    %ebp
+ret    
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+
+00100120 <frame_dummy>:
+mov    $0x0,%eax
+test   %eax,%eax
+je     100150 <frame_dummy+0x30>
+push   %ebp
+mov    %esp,%ebp
+sub    $0x10,%esp
+push   $0x102008
+push   $0x10085c
+call   0 <ALIGN-0x1>
+add    $0x10,%esp
+leave  
+jmp    100050 <register_tm_clones>
+lea    0x0(%esi,%eiz,1),%esi
+xchg   %ax,%ax
+jmp    100050 <register_tm_clones>
+
+00100155 <_start>:
+mov    $0x106020,%esp
+cli    
+call   100350 <setupGDT>
+sti    
+call   100841 <_init>
+call   1003f0 <kernel_main>
+cli    
+hlt    
+jmp    10016c <_start+0x17>
+nop
+
+00100170 <terminal_initialize>:
+movl   $0x0,0x10602c
+mov    $0xb80a0,%edx
+movl   $0x0,0x106028
+movb   $0x7,0x106024
+movl   $0xb8000,0x106020
+lea    0x0(%esi),%esi
+lea    -0xa0(%edx),%eax
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+mov    $0x720,%ecx
+add    $0x2,%eax
+mov    %cx,-0x2(%eax)
+cmp    %edx,%eax
+jne    1001b0 <terminal_initialize+0x40>
+lea    0xa0(%eax),%edx
+cmp    $0xb8fa0,%eax
+jne    1001a0 <terminal_initialize+0x30>
+ret    
+xchg   %ax,%ax
+
+001001d0 <terminal_setcolor>:
+mov    0x4(%esp),%eax
+mov    %al,0x106024
+ret    
+lea    0x0(%esi),%esi
+
+001001e0 <terminal_putentryat>:
+movzbl 0x8(%esp),%edx
+mov    0x10(%esp),%eax
+mov    %edx,%ecx
+movzbl 0x4(%esp),%edx
+lea    (%eax,%eax,4),%eax
+shl    $0x8,%ecx
+shl    $0x4,%eax
+add    0xc(%esp),%eax
+or     %ecx,%edx
+mov    0x106020,%ecx
+mov    %dx,(%ecx,%eax,2)
+ret    
+lea    0x0(%esi),%esi
+
+00100210 <terminal_scrollup>:
+subl   $0x1,0x10602c
+push   %ebx
+mov    0x106020,%ebx
+lea    0xf00(%ebx),%ecx
+mov    %ebx,%eax
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+movzwl 0xa0(%eax),%edx
+add    $0x2,%eax
+mov    %dx,-0x2(%eax)
+cmp    %ecx,%eax
+jne    100230 <terminal_scrollup+0x20>
+movzbl 0x106024,%ecx
+lea    0xfa0(%ebx),%edx
+shl    $0x8,%ecx
+or     $0x20,%ecx
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+mov    %cx,(%eax)
+add    $0x2,%eax
+cmp    %edx,%eax
+jne    100260 <terminal_scrollup+0x50>
+pop    %ebx
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+
+00100270 <terminal_putchar>:
+push   %esi
+mov    0x10602c,%ecx
+push   %ebx
+mov    0xc(%esp),%eax
+cmp    $0xa,%al
+je     1002c0 <terminal_putchar+0x50>
+movzbl 0x106024,%esi
+mov    0x106028,%ebx
+lea    (%ecx,%ecx,4),%edx
+movzbl %al,%eax
+shl    $0x4,%edx
+shl    $0x8,%esi
+add    %ebx,%edx
+or     %esi,%eax
+mov    0x106020,%esi
+mov    %ax,(%esi,%edx,2)
+lea    0x1(%ebx),%eax
+cmp    $0x4f,%ebx
+je     1002c0 <terminal_putchar+0x50>
+mov    %eax,0x106028
+pop    %ebx
+pop    %esi
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+xchg   %ax,%ax
+movl   $0x0,0x106028
+add    $0x1,%ecx
+mov    %ecx,0x10602c
+cmp    $0x19,%ecx
+jne    1002b4 <terminal_putchar+0x44>
+pop    %ebx
+pop    %esi
+jmp    100210 <terminal_scrollup>
+nop
+
+001002e0 <terminal_write>:
+push   %esi
+push   %ebx
+mov    0x10(%esp),%esi
+test   %esi,%esi
+je     100301 <terminal_write+0x21>
+mov    0xc(%esp),%ebx
+add    %ebx,%esi
+movsbl (%ebx),%eax
+add    $0x1,%ebx
+push   %eax
+call   100270 <terminal_putchar>
+pop    %eax
+cmp    %ebx,%esi
+jne    1002f0 <terminal_write+0x10>
+pop    %ebx
+pop    %esi
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+
+00100310 <terminal_writestring>:
+push   %esi
+push   %ebx
+sub    $0x10,%esp
+mov    0x1c(%esp),%ebx
+push   %ebx
+call   1007d0 <strlen>
+add    $0x10,%esp
+test   %eax,%eax
+je     100346 <terminal_writestring+0x36>
+lea    (%ebx,%eax,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+movsbl (%ebx),%eax
+sub    $0xc,%esp
+add    $0x1,%ebx
+push   %eax
+call   100270 <terminal_putchar>
+add    $0x10,%esp
+cmp    %ebx,%esi
+jne    100330 <terminal_writestring+0x20>
+add    $0x4,%esp
+pop    %ebx
+pop    %esi
+ret    
+xchg   %ax,%ax
+xchg   %ax,%ax
+
+00100350 <setupGDT>:
+sub    $0x44,%esp
+movl   $0x0,0x10(%esp)
+movl   $0x0,0x14(%esp)
+movl   $0xffff,0x18(%esp)
+movl   $0xcf9a00,0x1c(%esp)
+movl   $0xffff,0x20(%esp)
+movl   $0xcf9200,0x24(%esp)
+movl   $0xffff,0x28(%esp)
+movl   $0xcffa00,0x2c(%esp)
+movl   $0xffff,0x30(%esp)
+movl   $0xcff200,0x34(%esp)
+push   $0x28
+lea    0x14(%esp),%eax
+push   %eax
+call   1003be <setGdt>
+call   1003da <reloadSegments>
+add    $0x4c,%esp
+ret    
+
+001003b8 <gdtr>:
+add    %al,(%eax)
+add    %al,(%eax)
+	...
+
+001003be <setGdt>:
+mov    0x4(%esp),%eax
+mov    %eax,0x1003ba
+mov    0x8(%esp),%ax
+mov    %ax,0x1003b8
+lgdtl  0x1003b8
+ret    
+
+001003da <reloadSegments>:
+ljmp   $0x8,$0x1003e1
+
+001003e1 <reload_CS>:
+mov    $0x10,%ax
+mov    %eax,%ds
+mov    %eax,%es
+mov    %eax,%fs
+mov    %eax,%gs
+mov    %eax,%ss
+ret    
+
+001003f0 <kernel_main>:
+sub    $0xc,%esp
+call   100170 <terminal_initialize>
+sub    $0xc,%esp
+push   $0x100a70
+call   100520 <printf>
+movl   $0x100b24,(%esp)
+call   100520 <printf>
+movl   $0x100a86,(%esp)
+call   100520 <printf>
+movl   $0x100a93,(%esp)
+call   100520 <printf>
+movl   $0x100aa0,(%esp)
+call   100520 <printf>
+movl   $0x100aad,(%esp)
+call   100520 <printf>
+movl   $0x100aba,(%esp)
+call   100520 <printf>
+movl   $0x100ac7,(%esp)
+call   100520 <printf>
+movl   $0x100ad4,(%esp)
+call   100520 <printf>
+movl   $0x100ae1,(%esp)
+call   100520 <printf>
+movl   $0x100aee,(%esp)
+call   100520 <printf>
+movl   $0x100afb,(%esp)
+call   100520 <printf>
+movl   $0x100a86,(%esp)
+call   100520 <printf>
+movl   $0x100a93,(%esp)
+call   100520 <printf>
+movl   $0x100aa0,(%esp)
+call   100520 <printf>
+movl   $0x100aad,(%esp)
+call   100520 <printf>
+movl   $0x100aba,(%esp)
+call   100520 <printf>
+movl   $0x100ac7,(%esp)
+call   100520 <printf>
+movl   $0x100ad4,(%esp)
+call   100520 <printf>
+movl   $0x100ae1,(%esp)
+call   100520 <printf>
+movl   $0x100aee,(%esp)
+call   100520 <printf>
+movl   $0x100afb,(%esp)
+call   100520 <printf>
+movl   $0x100b08,(%esp)
+call   100520 <printf>
+add    $0x1c,%esp
+ret    
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+nop
+
+00100520 <printf>:
+push   %ebp
+push   %edi
+push   %esi
+push   %ebx
+sub    $0x1c,%esp
+mov    0x30(%esp),%esi
+lea    0x34(%esp),%eax
+movl   $0x0,(%esp)
+mov    %eax,0x8(%esp)
+movzbl (%esi),%eax
+test   %al,%al
+je     1005d7 <printf+0xb7>
+mov    %esi,%edi
+lea    0x0(%esi,%eiz,1),%esi
+xchg   %ax,%ax
+mov    $0x7fffffff,%ecx
+movzbl 0x1(%edi),%edx
+sub    (%esp),%ecx
+cmp    $0x25,%al
+jne    1005f7 <printf+0xd7>
+cmp    $0x25,%dl
+je     1005f0 <printf+0xd0>
+cmp    $0x63,%dl
+je     100740 <printf+0x220>
+mov    %ecx,0x4(%esp)
+cmp    $0x73,%dl
+je     1006b0 <printf+0x190>
+sub    $0xc,%esp
+push   %edi
+call   1007d0 <strlen>
+mov    0x14(%esp),%ecx
+add    $0x10,%esp
+mov    %eax,%esi
+cmp    %eax,%ecx
+jb     1005d0 <printf+0xb0>
+test   %eax,%eax
+je     100670 <printf+0x150>
+mov    %edi,%ebp
+lea    (%edi,%eax,1),%edi
+jmp    1005bb <printf+0x9b>
+lea    0x0(%esi,%eiz,1),%esi
+nop
+add    $0x1,%ebp
+cmp    %ebp,%edi
+je     100670 <printf+0x150>
+movzbl 0x0(%ebp),%eax
+sub    $0xc,%esp
+push   %eax
+call   1007b0 <putchar>
+add    $0x10,%esp
+cmp    $0xffffffff,%eax
+jne    1005b0 <printf+0x90>
+movl   $0xffffffff,(%esp)
+mov    (%esp),%eax
+add    $0x1c,%esp
+pop    %ebx
+pop    %esi
+pop    %edi
+pop    %ebp
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+movzbl 0x2(%edi),%edx
+add    $0x1,%edi
+cmp    $0x25,%dl
+je     100790 <printf+0x270>
+test   %dl,%dl
+je     100790 <printf+0x270>
+mov    $0x1,%ebp
+lea    0x0(%esi),%esi
+add    $0x1,%ebp
+movzbl (%edi,%ebp,1),%eax
+lea    (%edi,%ebp,1),%esi
+test   %al,%al
+je     100622 <printf+0x102>
+cmp    $0x25,%al
+jne    100610 <printf+0xf0>
+cmp    %ebp,%ecx
+jb     1005d0 <printf+0xb0>
+test   %ebp,%ebp
+je     1007a5 <printf+0x285>
+xor    %ebx,%ebx
+jmp    100647 <printf+0x127>
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+add    $0x1,%ebx
+cmp    %ebp,%ebx
+jae    1006a0 <printf+0x180>
+movzbl (%edi,%ebx,1),%eax
+sub    $0xc,%esp
+push   %eax
+call   1007b0 <putchar>
+add    $0x10,%esp
+cmp    $0xffffffff,%eax
+jne    100640 <printf+0x120>
+jmp    1005d0 <printf+0xb0>
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+add    %esi,(%esp)
+movzbl (%edi),%eax
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+test   %al,%al
+jne    100550 <printf+0x30>
+mov    (%esp),%eax
+add    $0x1c,%esp
+pop    %ebx
+pop    %esi
+pop    %edi
+pop    %ebp
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+movzbl (%esi),%eax
+mov    %esi,%edi
+add    %ebp,(%esp)
+jmp    100680 <printf+0x160>
+lea    0x0(%esi),%esi
+lea    0x2(%edi),%eax
+sub    $0xc,%esp
+mov    %eax,0x18(%esp)
+mov    0x14(%esp),%eax
+mov    (%eax),%esi
+lea    0x4(%eax),%ebx
+push   %esi
+call   1007d0 <strlen>
+mov    %eax,0x18(%esp)
+mov    0x14(%esp),%ecx
+add    $0x10,%esp
+cmp    %eax,%ecx
+jb     1005d0 <printf+0xb0>
+test   %eax,%eax
+je     100720 <printf+0x200>
+mov    %esi,%ebp
+lea    (%esi,%eax,1),%esi
+jmp    1006f7 <printf+0x1d7>
+lea    0x0(%esi,%eiz,1),%esi
+xchg   %ax,%ax
+add    $0x1,%ebp
+cmp    %ebp,%esi
+je     100720 <printf+0x200>
+movzbl 0x0(%ebp),%eax
+sub    $0xc,%esp
+push   %eax
+call   1007b0 <putchar>
+add    $0x10,%esp
+cmp    $0xffffffff,%eax
+jne    1006f0 <printf+0x1d0>
+jmp    1005d0 <printf+0xb0>
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+mov    0x8(%esp),%edx
+movzbl 0x2(%edi),%eax
+mov    %ebx,0x8(%esp)
+add    %edx,(%esp)
+mov    0xc(%esp),%edi
+jmp    100680 <printf+0x160>
+lea    0x0(%esi,%eiz,1),%esi
+nop
+mov    0x8(%esp),%edx
+lea    0x2(%edi),%esi
+mov    %edx,%eax
+add    $0x4,%edx
+mov    %edx,0x8(%esp)
+mov    (%eax),%eax
+test   %ecx,%ecx
+je     1005d0 <printf+0xb0>
+sub    $0xc,%esp
+movzbl %al,%eax
+push   %eax
+call   1007b0 <putchar>
+add    $0x10,%esp
+cmp    $0xffffffff,%eax
+je     1005d0 <printf+0xb0>
+movzbl 0x2(%edi),%eax
+addl   $0x1,(%esp)
+mov    %esi,%edi
+jmp    100680 <printf+0x160>
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi,%eiz,1),%esi
+nop
+test   %ecx,%ecx
+je     1005d0 <printf+0xb0>
+lea    0x1(%edi),%esi
+mov    $0x1,%ebp
+jmp    10062e <printf+0x10e>
+mov    %esi,%edi
+jmp    1006a5 <printf+0x185>
+xchg   %ax,%ax
+xchg   %ax,%ax
+
+001007b0 <putchar>:
+push   %ebx
+sub    $0x20,%esp
+mov    0x28(%esp),%ebx
+mov    %bl,0x17(%esp)
+push   $0x1
+lea    0x1b(%esp),%eax
+push   %eax
+call   1002e0 <terminal_write>
+add    $0x28,%esp
+mov    %ebx,%eax
+pop    %ebx
+ret    
+nop
+
+001007d0 <strlen>:
+mov    0x4(%esp),%edx
+xor    %eax,%eax
+cmpb   $0x0,(%edx)
+je     1007f0 <strlen+0x20>
+lea    0x0(%esi,%eiz,1),%esi
+nop
+add    $0x1,%eax
+cmpb   $0x0,(%edx,%eax,1)
+jne    1007e0 <strlen+0x10>
+ret    
+lea    0x0(%esi),%esi
+ret    
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+xchg   %ax,%ax
+nop
+
+00100800 <__do_global_ctors_aux>:
+mov    0x101004,%eax
+cmp    $0xffffffff,%eax
+je     100840 <__do_global_ctors_aux+0x40>
+push   %ebp
+mov    %esp,%ebp
+push   %ebx
+mov    $0x101004,%ebx
+sub    $0x4,%esp
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+call   *%eax
+mov    -0x4(%ebx),%eax
+sub    $0x4,%ebx
+cmp    $0xffffffff,%eax
+jne    100820 <__do_global_ctors_aux+0x20>
+add    $0x4,%esp
+pop    %ebx
+pop    %ebp
+ret    
+lea    0x0(%esi,%eiz,1),%esi
+lea    0x0(%esi),%esi
+ret    
+
+Disassembly of section .init:
+
+00100841 <_init>:
+push   %ebp
+mov    %esp,%ebp
+call   100120 <frame_dummy>
+call   100800 <__do_global_ctors_aux>
+pop    %ebp
+ret    
+
+Disassembly of section .fini:
+
+00100850 <_fini>:
+push   %ebp
+mov    %esp,%ebp
+call   1000a0 <__do_global_dtors_aux>
+pop    %ebp
+ret    

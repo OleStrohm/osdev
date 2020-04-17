@@ -1,0 +1,279 @@
+2c2
+< working.kernel:     file format elf32-i386
+---
+> myos.kernel2:     file format elf32-i386
+95c95
+<   1000f5:	push   $0x10085c
+---
+>   1000f5:	push   $0x10084c
+117c117
+<   100134:	push   $0x10085c
+---
+>   100134:	push   $0x10084c
+131c131
+<   100161:	call   100841 <_init>
+---
+>   100161:	call   100831 <_init>
+271c271
+<   10031a:	call   1007d0 <strlen>
+---
+>   10031a:	call   1007c0 <strlen>
+341c341
+<   1003fb:	push   $0x100a70
+---
+>   1003fb:	push   $0x100a4c
+343c343
+<   100405:	movl   $0x100b24,(%esp)
+---
+>   100405:	movl   $0x100b0c,(%esp)
+345c345
+<   100411:	movl   $0x100a86,(%esp)
+---
+>   100411:	movl   $0x100a62,(%esp)
+347c347
+<   10041d:	movl   $0x100a93,(%esp)
+---
+>   10041d:	movl   $0x100a6f,(%esp)
+349c349
+<   100429:	movl   $0x100aa0,(%esp)
+---
+>   100429:	movl   $0x100a7c,(%esp)
+351c351
+<   100435:	movl   $0x100aad,(%esp)
+---
+>   100435:	movl   $0x100a89,(%esp)
+353c353
+<   100441:	movl   $0x100aba,(%esp)
+---
+>   100441:	movl   $0x100a96,(%esp)
+355c355
+<   10044d:	movl   $0x100ac7,(%esp)
+---
+>   10044d:	movl   $0x100aa3,(%esp)
+357c357
+<   100459:	movl   $0x100ad4,(%esp)
+---
+>   100459:	movl   $0x100ab0,(%esp)
+359c359
+<   100465:	movl   $0x100ae1,(%esp)
+---
+>   100465:	movl   $0x100abd,(%esp)
+361c361
+<   100471:	movl   $0x100aee,(%esp)
+---
+>   100471:	movl   $0x100aca,(%esp)
+363c363
+<   10047d:	movl   $0x100afb,(%esp)
+---
+>   10047d:	movl   $0x100ad7,(%esp)
+365c365
+<   100489:	movl   $0x100a86,(%esp)
+---
+>   100489:	movl   $0x100a62,(%esp)
+367c367
+<   100495:	movl   $0x100a93,(%esp)
+---
+>   100495:	movl   $0x100a6f,(%esp)
+369c369
+<   1004a1:	movl   $0x100aa0,(%esp)
+---
+>   1004a1:	movl   $0x100a7c,(%esp)
+371c371
+<   1004ad:	movl   $0x100aad,(%esp)
+---
+>   1004ad:	movl   $0x100a89,(%esp)
+373c373
+<   1004b9:	movl   $0x100aba,(%esp)
+---
+>   1004b9:	movl   $0x100a96,(%esp)
+375c375
+<   1004c5:	movl   $0x100ac7,(%esp)
+---
+>   1004c5:	movl   $0x100aa3,(%esp)
+377c377
+<   1004d1:	movl   $0x100ad4,(%esp)
+---
+>   1004d1:	movl   $0x100ab0,(%esp)
+379c379
+<   1004dd:	movl   $0x100ae1,(%esp)
+---
+>   1004dd:	movl   $0x100abd,(%esp)
+381c381
+<   1004e9:	movl   $0x100aee,(%esp)
+---
+>   1004e9:	movl   $0x100aca,(%esp)
+383c383
+<   1004f5:	movl   $0x100afb,(%esp)
+---
+>   1004f5:	movl   $0x100ad7,(%esp)
+385c385
+<   100501:	movl   $0x100b08,(%esp)
+---
+>   100501:	movl   $0x100ae4,(%esp)
+387,394c387,390
+<   10050d:	add    $0x1c,%esp
+<   100510:	ret    
+<   100511:	xchg   %ax,%ax
+<   100513:	xchg   %ax,%ax
+<   100515:	xchg   %ax,%ax
+<   100517:	xchg   %ax,%ax
+<   100519:	xchg   %ax,%ax
+<   10051b:	xchg   %ax,%ax
+---
+>   10050d:	movl   $0x100afd,(%esp)
+>   100514:	call   100520 <printf>
+>   100519:	add    $0x1c,%esp
+>   10051c:	ret    
+428c424
+<   100587:	call   1007d0 <strlen>
+---
+>   100587:	call   1007c0 <strlen>
+525c521
+<   1006c4:	call   1007d0 <strlen>
+---
+>   1006c4:	call   1007c0 <strlen>
+593,604c589,603
+<   1007b0:	push   %ebx
+<   1007b1:	sub    $0x20,%esp
+<   1007b4:	mov    0x28(%esp),%ebx
+<   1007b8:	mov    %bl,0x17(%esp)
+<   1007bc:	push   $0x1
+<   1007be:	lea    0x1b(%esp),%eax
+<   1007c2:	push   %eax
+<   1007c3:	call   1002e0 <terminal_write>
+<   1007c8:	add    $0x28,%esp
+<   1007cb:	mov    %ebx,%eax
+<   1007cd:	pop    %ebx
+<   1007ce:	ret    
+---
+>   1007b0:	mov    0x4(%esp),%eax
+>   1007b4:	ret    
+>   1007b5:	xchg   %ax,%ax
+>   1007b7:	xchg   %ax,%ax
+>   1007b9:	xchg   %ax,%ax
+>   1007bb:	xchg   %ax,%ax
+>   1007bd:	xchg   %ax,%ax
+>   1007bf:	nop
+> 
+> 001007c0 <strlen>:
+>   1007c0:	mov    0x4(%esp),%edx
+>   1007c4:	xor    %eax,%eax
+>   1007c6:	cmpb   $0x0,(%edx)
+>   1007c9:	je     1007e0 <strlen+0x20>
+>   1007cb:	lea    0x0(%esi,%eiz,1),%esi
+606,651c605,642
+< 
+< 001007d0 <strlen>:
+<   1007d0:	mov    0x4(%esp),%edx
+<   1007d4:	xor    %eax,%eax
+<   1007d6:	cmpb   $0x0,(%edx)
+<   1007d9:	je     1007f0 <strlen+0x20>
+<   1007db:	lea    0x0(%esi,%eiz,1),%esi
+<   1007df:	nop
+<   1007e0:	add    $0x1,%eax
+<   1007e3:	cmpb   $0x0,(%edx,%eax,1)
+<   1007e7:	jne    1007e0 <strlen+0x10>
+<   1007e9:	ret    
+<   1007ea:	lea    0x0(%esi),%esi
+<   1007f0:	ret    
+<   1007f1:	xchg   %ax,%ax
+<   1007f3:	xchg   %ax,%ax
+<   1007f5:	xchg   %ax,%ax
+<   1007f7:	xchg   %ax,%ax
+<   1007f9:	xchg   %ax,%ax
+<   1007fb:	xchg   %ax,%ax
+<   1007fd:	xchg   %ax,%ax
+<   1007ff:	nop
+< 
+< 00100800 <__do_global_ctors_aux>:
+<   100800:	mov    0x101004,%eax
+<   100805:	cmp    $0xffffffff,%eax
+<   100808:	je     100840 <__do_global_ctors_aux+0x40>
+<   10080a:	push   %ebp
+<   10080b:	mov    %esp,%ebp
+<   10080d:	push   %ebx
+<   10080e:	mov    $0x101004,%ebx
+<   100813:	sub    $0x4,%esp
+<   100816:	lea    0x0(%esi,%eiz,1),%esi
+<   10081d:	lea    0x0(%esi),%esi
+<   100820:	call   *%eax
+<   100822:	mov    -0x4(%ebx),%eax
+<   100825:	sub    $0x4,%ebx
+<   100828:	cmp    $0xffffffff,%eax
+<   10082b:	jne    100820 <__do_global_ctors_aux+0x20>
+<   10082d:	add    $0x4,%esp
+<   100830:	pop    %ebx
+<   100831:	pop    %ebp
+<   100832:	ret    
+<   100833:	lea    0x0(%esi,%eiz,1),%esi
+<   10083a:	lea    0x0(%esi),%esi
+<   100840:	ret    
+---
+>   1007d0:	add    $0x1,%eax
+>   1007d3:	cmpb   $0x0,(%edx,%eax,1)
+>   1007d7:	jne    1007d0 <strlen+0x10>
+>   1007d9:	ret    
+>   1007da:	lea    0x0(%esi),%esi
+>   1007e0:	ret    
+>   1007e1:	xchg   %ax,%ax
+>   1007e3:	xchg   %ax,%ax
+>   1007e5:	xchg   %ax,%ax
+>   1007e7:	xchg   %ax,%ax
+>   1007e9:	xchg   %ax,%ax
+>   1007eb:	xchg   %ax,%ax
+>   1007ed:	xchg   %ax,%ax
+>   1007ef:	nop
+> 
+> 001007f0 <__do_global_ctors_aux>:
+>   1007f0:	mov    0x101004,%eax
+>   1007f5:	cmp    $0xffffffff,%eax
+>   1007f8:	je     100830 <__do_global_ctors_aux+0x40>
+>   1007fa:	push   %ebp
+>   1007fb:	mov    %esp,%ebp
+>   1007fd:	push   %ebx
+>   1007fe:	mov    $0x101004,%ebx
+>   100803:	sub    $0x4,%esp
+>   100806:	lea    0x0(%esi,%eiz,1),%esi
+>   10080d:	lea    0x0(%esi),%esi
+>   100810:	call   *%eax
+>   100812:	mov    -0x4(%ebx),%eax
+>   100815:	sub    $0x4,%ebx
+>   100818:	cmp    $0xffffffff,%eax
+>   10081b:	jne    100810 <__do_global_ctors_aux+0x20>
+>   10081d:	add    $0x4,%esp
+>   100820:	pop    %ebx
+>   100821:	pop    %ebp
+>   100822:	ret    
+>   100823:	lea    0x0(%esi,%eiz,1),%esi
+>   10082a:	lea    0x0(%esi),%esi
+>   100830:	ret    
+655,661c646,652
+< 00100841 <_init>:
+<   100841:	push   %ebp
+<   100842:	mov    %esp,%ebp
+<   100844:	call   100120 <frame_dummy>
+<   100849:	call   100800 <__do_global_ctors_aux>
+<   10084e:	pop    %ebp
+<   10084f:	ret    
+---
+> 00100831 <_init>:
+>   100831:	push   %ebp
+>   100832:	mov    %esp,%ebp
+>   100834:	call   100120 <frame_dummy>
+>   100839:	call   1007f0 <__do_global_ctors_aux>
+>   10083e:	pop    %ebp
+>   10083f:	ret    
+665,670c656,661
+< 00100850 <_fini>:
+<   100850:	push   %ebp
+<   100851:	mov    %esp,%ebp
+<   100853:	call   1000a0 <__do_global_dtors_aux>
+<   100858:	pop    %ebp
+<   100859:	ret    
+---
+> 00100840 <_fini>:
+>   100840:	push   %ebp
+>   100841:	mov    %esp,%ebp
+>   100843:	call   1000a0 <__do_global_dtors_aux>
+>   100848:	pop    %ebp
+>   100849:	ret    
