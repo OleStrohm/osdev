@@ -27,7 +27,7 @@ project "kernel"
 			"%{prj.location}/**.s" }
 	
 project "libc"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
 	location "libc/"
 
