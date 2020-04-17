@@ -32,11 +32,11 @@ TARGETDIR = ../build/kernel/bin/Debug
 TARGET = $(TARGETDIR)/kernel
 OBJDIR = ../build/kernel/obj
 DEFINES += -DDEBUG
-INCLUDES += -I../sysroot/usr/include
+INCLUDES +=
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS += ../build/k/bin/Debug/libk.a
 LDDEPS += ../build/k/bin/Debug/libk.a

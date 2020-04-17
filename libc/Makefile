@@ -31,12 +31,12 @@ RESCOMP = i686-elf-windres
 TARGETDIR = ../build/k/bin/Debug
 TARGET = $(TARGETDIR)/libk.a
 OBJDIR = ../build/k/obj
-DEFINES += -DDEBUG
-INCLUDES += -I../sysroot/usr/include
+DEFINES += -DDEBUG -D__is_libc -D__is_libk
+INCLUDES += -Iinclude
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS +=
 LDDEPS +=

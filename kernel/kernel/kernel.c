@@ -27,5 +27,6 @@ void kernel_main(void) {
 	printf("Many lines9\n");
 	printf("Many lines0\n");
 	printf("This one scrolls A lot1\n");
-	printf("Is this it?!\n");
+	printf("YES?!\n");
+	printf("YES!!\n");
 }

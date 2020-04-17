@@ -5,10 +5,9 @@ gccprefix "i686-elf-"
 
 targetdir "build/%{prj.name}/bin/%{cfg.buildcfg}"
 objdir "build/%{prj.name}/obj"
-includedirs { "sysroot/usr/include" }
 
 filter { "action:gmake*" }
-	buildoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-c -std=gnu99 -ffreestanding -O2 -Wall -Wextra" }
+	buildoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra" }
 	linkoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-ffreestanding", "-O2", "-nostdlib", "-lgcc", "-lk" }
 
 filter { "configurations:Debug" }
@@ -56,6 +55,10 @@ project "k"
 	kind "StaticLib"
 	language "C"
 	location "libc"
+
+	defines { "__is_libc", "__is_libk" }
+
+	includedirs { "%{prj.location}/include"}
 	prebuildcommands {
 		"mkdir -p %{wks.location}/sysroot/usr/include",
 		"cp -RT %{prj.location}/include %{wks.location}/sysroot/usr/include"
