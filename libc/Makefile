@@ -35,12 +35,12 @@ DEFINES += -DDEBUG
 INCLUDES += -I../sysroot/usr/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS +=
 LDDEPS +=
-ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib
+ALL_LDFLAGS += $(LDFLAGS) --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -ffreestanding -O2 -nostdlib -lgcc -lk
 LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
 define PREBUILDCMDS
 	@echo Copying headers

@@ -32,15 +32,15 @@ TARGETDIR = ../build/kernel/bin/Debug
 TARGET = $(TARGETDIR)/kernel
 OBJDIR = ../build/kernel/obj
 DEFINES += -DDEBUG
-INCLUDES += -I../sysroot/usr/include -isystem ../sysroot/usr/include
+INCLUDES += -I../sysroot/usr/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS += ../build/k/bin/Debug/libk.a
 LDDEPS += ../build/k/bin/Debug/libk.a
-ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib -T ./arch/i386/linker.ld
+ALL_LDFLAGS += $(LDFLAGS) --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -ffreestanding -O2 -nostdlib -lgcc -lk -T ./arch/i386/linker.ld
 LINKCMD = $(CC) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 	@echo Copying headers

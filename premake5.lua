@@ -8,8 +8,8 @@ objdir "build/%{prj.name}/obj"
 includedirs { "sysroot/usr/include" }
 
 filter { "action:gmake*" }
-	buildoptions { "-c -std=gnu99 -ffreestanding -O2 -Wall -Wextra" }
-	linkoptions { "-ffreestanding", "-O2", "-nostdlib" }
+	buildoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-c -std=gnu99 -ffreestanding -O2 -Wall -Wextra" }
+	linkoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-ffreestanding", "-O2", "-nostdlib", "-lgcc", "-lk" }
 
 filter { "configurations:Debug" }
 	defines { "DEBUG" }
@@ -23,7 +23,6 @@ project "kernel"
 	kind "ConsoleApp"
 	language "C"
 	location "kernel"
-	sysincludedirs { "%{wks.location}/sysroot/usr/include" }
 	linkoptions { "-T %{prj.location}/arch/i386/linker.ld" }
 	prebuildcommands {
 		"mkdir -p %{wks.location}/sysroot/usr/include",
@@ -43,12 +42,15 @@ project "kernel"
 
 	links { "k" }
 
-	files { "%{prj.location}/**.o",
-			"%{prj.location}/**.h",
-			"%{prj.location}/**.hpp",
-			"%{prj.location}/**.c",
-			"%{prj.location}/**.cpp",
-			"%{prj.location}/**.s" }
+	files {
+		"%{prj.location}/**.h",
+		"%{prj.location}/**.hpp",
+		"%{prj.location}/**.c",
+		"%{prj.location}/**.cpp",
+		"%{prj.location}/**.s",
+		"%{prj.location}/arch/i386/crtbegin.o",
+		"%{prj.location}/arch/i386/crtend.o"
+		}
 	
 project "k"
 	kind "StaticLib"
@@ -63,8 +65,7 @@ project "k"
 		"cp %{cfg.buildtarget.relpath} %{wks.location}/sysroot/usr/lib"
 	}
 
-	files { "%{prj.location}/**.o",
-			"%{prj.location}/**.h",
+	files { "%{prj.location}/**.h",
 			"%{prj.location}/**.hpp",
 			"%{prj.location}/**.c",
 			"%{prj.location}/**.cpp",

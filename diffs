@@ -1,0 +1,3 @@
+i686-elf-gcc --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -T arch/i386/linker.ld -o myos.kernel -O2 -g -ffreestanding -Wall -Wextra arch/i386/crti.o arch/i386/crtbegin.o arch/i386/boot.o arch/i386/tty.o arch/i386/gdt.o arch/i386/gdt_asm.o  kernel/kernel.o -nostdlib -lk -lgcc arch/i386/crtend.o arch/i386/crtn.o
+
+
