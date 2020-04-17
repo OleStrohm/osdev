@@ -1,4 +1,4 @@
-#include "gdt.h"
+#include <kernel/gdt.h>
 
 extern void reloadSegments();
 extern void setGdt(uint8_t *gdt, uint16_t size);

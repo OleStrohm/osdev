@@ -30,7 +30,7 @@ _start:
 
 	call setupGDT
 
-	sti
+	call idt_init
 
 	# Call the global constructors.
 	call _init
