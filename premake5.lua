@@ -1,6 +1,8 @@
 workspace "os"
 	configurations { "Debug" }
 
+gccprefix "i686-elf-"
+
 targetdir "build/%{prj.name}/bin/%{cfg.buildcfg}"
 objdir "build/%{prj.name}/obj"
 
@@ -12,12 +14,14 @@ filter { "configurations:Debug" }
 	defines { "DEBUG" }
 	symbols "On"
 
+
 project "kernel"
 	kind "ConsoleApp"
 	language "C"
-	location "kernel/"
-	includedirs { "%{prj.location}/include/" }
-	links { "libc" }
+	location "kernel"
+	includedirs { "*/include" }
+
+	links { "k" }
 
 	files { "%{prj.location}/**.o",
 			"%{prj.location}/**.h",
@@ -26,10 +30,11 @@ project "kernel"
 			"%{prj.location}/**.cpp",
 			"%{prj.location}/**.s" }
 	
-project "libc"
+project "k"
 	kind "StaticLib"
-	language "C++"
-	location "libc/"
+	language "C"
+	location "libc"
+	includedirs { "libc/include" }
 
 	files { "%{prj.location}/**.o",
 			"%{prj.location}/**.h",

@@ -18,21 +18,30 @@ endif
 # Configurations
 # #############################################
 
-RESCOMP = windres
-TARGETDIR = ../build/libc/bin/Debug
-TARGET = $(TARGETDIR)/liblibc.so
-OBJDIR = ../build/libc/obj
+ifeq ($(origin CC), default)
+  CC = i686-elf-gcc
+endif
+ifeq ($(origin CXX), default)
+  CXX = i686-elf-g++
+endif
+ifeq ($(origin AR), default)
+  AR = i686-elf-ar
+endif
+RESCOMP = i686-elf-windres
+TARGETDIR = ../build/k/bin/Debug
+TARGET = $(TARGETDIR)/libk.a
+OBJDIR = ../build/k/obj
 DEFINES += -DDEBUG
-INCLUDES +=
+INCLUDES += -Iinclude
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -fPIC -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -fPIC -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS +=
 LDDEPS +=
-ALL_LDFLAGS += $(LDFLAGS) -shared -Wl,-soname=liblibc.so -ffreestanding -O2 -nostdlib
-LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib
+LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
 define PREBUILDCMDS
 endef
 define PRELINKCMDS
@@ -77,7 +86,7 @@ all: $(TARGET)
 
 $(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking libc
+	@echo Linking k
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -98,7 +107,7 @@ else
 endif
 
 clean:
-	@echo Cleaning libc
+	@echo Cleaning k
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(GENERATED)
@@ -116,7 +125,7 @@ ifneq (,$(PCH))
 $(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
 $(GCH): $(PCH) | prebuild
 	@echo $(notdir $<)
-	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
+	$(SILENT) $(CC) -x c-header $(ALL_CFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 $(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) touch "$@"

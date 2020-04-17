@@ -18,20 +18,29 @@ endif
 # Configurations
 # #############################################
 
-RESCOMP = windres
+ifeq ($(origin CC), default)
+  CC = i686-elf-gcc
+endif
+ifeq ($(origin CXX), default)
+  CXX = i686-elf-g++
+endif
+ifeq ($(origin AR), default)
+  AR = i686-elf-ar
+endif
+RESCOMP = i686-elf-windres
 TARGETDIR = ../build/kernel/bin/Debug
 TARGET = $(TARGETDIR)/kernel
 OBJDIR = ../build/kernel/obj
 DEFINES += -DDEBUG
-INCLUDES += -Iinclude
+INCLUDES += -Iinclude -I../libc/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += ../build/libc/bin/Debug/liblibc.so
-LDDEPS += ../build/libc/bin/Debug/liblibc.so
-ALL_LDFLAGS += $(LDFLAGS) -Wl,-rpath,'$$ORIGIN/../../../libc/bin/Debug' -ffreestanding -O2 -nostdlib
+LIBS += ../build/k/bin/Debug/libk.a
+LDDEPS += ../build/k/bin/Debug/libk.a
+ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib
 LINKCMD = $(CC) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -50,10 +59,18 @@ endef
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/boot.o
+GENERATED += $(OBJDIR)/crti.o
+GENERATED += $(OBJDIR)/crtn.o
 GENERATED += $(OBJDIR)/gdt.o
+GENERATED += $(OBJDIR)/gdt_asm.o
 GENERATED += $(OBJDIR)/kernel.o
 GENERATED += $(OBJDIR)/tty.o
+OBJECTS += $(OBJDIR)/boot.o
+OBJECTS += $(OBJDIR)/crti.o
+OBJECTS += $(OBJDIR)/crtn.o
 OBJECTS += $(OBJDIR)/gdt.o
+OBJECTS += $(OBJDIR)/gdt_asm.o
 OBJECTS += $(OBJDIR)/kernel.o
 OBJECTS += $(OBJDIR)/tty.o
 
@@ -119,7 +136,19 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/boot.o: arch/i386/boot.s
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/crti.o: arch/i386/crti.s
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/crtn.o: arch/i386/crtn.s
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/gdt.o: arch/i386/gdt.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/gdt_asm.o: arch/i386/gdt_asm.s
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/tty.o: arch/i386/tty.c

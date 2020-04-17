@@ -10,28 +10,28 @@ endif
 
 ifeq ($(config),debug)
   kernel_config = debug
-  libc_config = debug
+  k_config = debug
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := kernel libc
+PROJECTS := kernel k
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-kernel: libc
+kernel: k
 ifneq (,$(kernel_config))
 	@echo "==== Building kernel ($(kernel_config)) ===="
 	@${MAKE} --no-print-directory -C kernel -f Makefile config=$(kernel_config)
 endif
 
-libc:
-ifneq (,$(libc_config))
-	@echo "==== Building libc ($(libc_config)) ===="
-	@${MAKE} --no-print-directory -C libc -f Makefile config=$(libc_config)
+k:
+ifneq (,$(k_config))
+	@echo "==== Building k ($(k_config)) ===="
+	@${MAKE} --no-print-directory -C libc -f Makefile config=$(k_config)
 endif
 
 clean:
@@ -48,6 +48,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   kernel"
-	@echo "   libc"
+	@echo "   k"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
