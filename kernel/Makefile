@@ -32,7 +32,7 @@ TARGETDIR = ../build/kernel/bin/Debug
 TARGET = $(TARGETDIR)/kernel
 OBJDIR = ../build/kernel/obj
 DEFINES += -DDEBUG
-INCLUDES += -Iinclude -I../libc/include
+INCLUDES += -I../sysroot/usr/include -isystem ../sysroot/usr/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
@@ -40,13 +40,25 @@ ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS += ../build/k/bin/Debug/libk.a
 LDDEPS += ../build/k/bin/Debug/libk.a
-ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib
+ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib -T ./arch/i386/linker.ld
 LINKCMD = $(CC) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
+	@echo Copying headers
+	mkdir -p ../sysroot/usr/include
+	cp -RT ./include ../sysroot/usr/include
 endef
 define PRELINKCMDS
 endef
 define POSTBUILDCMDS
+	@echo Creating iso
+	mkdir -p ../sysroot/boot
+	cp ../build/kernel/bin/Debug/kernel ../sysroot/boot
+	mkdir -p ../isodir/boot/grub
+	cp ../build/kernel/bin/Debug/kernel ../isodir/boot/kernel
+	echo 'menuentry "os" {' > ../isodir/boot/grub/grub.cfg
+	echo 'multiboot /boot/kernel' >> ../isodir/boot/grub/grub.cfg
+	echo '}' >> ../isodir/boot/grub/grub.cfg
+	grub-mkrescue -o ../os.iso ../isodir
 endef
 
 # Per File Configurations

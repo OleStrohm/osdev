@@ -32,7 +32,7 @@ TARGETDIR = ../build/k/bin/Debug
 TARGET = $(TARGETDIR)/libk.a
 OBJDIR = ../build/k/obj
 DEFINES += -DDEBUG
-INCLUDES += -Iinclude
+INCLUDES += -I../sysroot/usr/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra
@@ -43,10 +43,16 @@ LDDEPS +=
 ALL_LDFLAGS += $(LDFLAGS) -ffreestanding -O2 -nostdlib
 LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
 define PREBUILDCMDS
+	@echo Copying headers
+	mkdir -p ../sysroot/usr/include
+	cp -RT ./include ../sysroot/usr/include
 endef
 define PRELINKCMDS
 endef
 define POSTBUILDCMDS
+	@echo Running postbuild commands
+	mkdir -p ../sysroot/usr/lib
+	cp ../build/k/bin/Debug/libk.a ../sysroot/usr/lib
 endef
 
 # Per File Configurations

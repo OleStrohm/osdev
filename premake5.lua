@@ -5,6 +5,7 @@ gccprefix "i686-elf-"
 
 targetdir "build/%{prj.name}/bin/%{cfg.buildcfg}"
 objdir "build/%{prj.name}/obj"
+includedirs { "sysroot/usr/include" }
 
 filter { "action:gmake*" }
 	buildoptions { "-c -std=gnu99 -ffreestanding -O2 -Wall -Wextra" }
@@ -14,12 +15,31 @@ filter { "configurations:Debug" }
 	defines { "DEBUG" }
 	symbols "On"
 
+prebuildmessage "Copying headers"
+
+cleancommands { "rm -rf %{wks.location}/build" }
 
 project "kernel"
 	kind "ConsoleApp"
 	language "C"
 	location "kernel"
-	includedirs { "*/include" }
+	sysincludedirs { "%{wks.location}/sysroot/usr/include" }
+	linkoptions { "-T %{prj.location}/arch/i386/linker.ld" }
+	prebuildcommands {
+		"mkdir -p %{wks.location}/sysroot/usr/include",
+		"cp -RT %{prj.location}/include %{wks.location}/sysroot/usr/include"
+	}
+	postbuildcommands {
+		"mkdir -p %{wks.location}/sysroot/boot",
+		"cp %{cfg.buildtarget.relpath} %{wks.location}/sysroot/boot",
+		"mkdir -p %{wks.location}/isodir/boot/grub",
+		"cp %{cfg.buildtarget.relpath} %{wks.location}/isodir/boot/kernel",
+		"echo 'menuentry \"os\" {' > %{wks.location}/isodir/boot/grub/grub.cfg",
+		"echo 'multiboot /boot/kernel' >> %{wks.location}/isodir/boot/grub/grub.cfg",
+		"echo '}' >> %{wks.location}/isodir/boot/grub/grub.cfg",
+		"grub-mkrescue -o %{wks.location}/os.iso %{wks.location}/isodir"
+	}
+	postbuildmessage "Creating iso"
 
 	links { "k" }
 
@@ -34,7 +54,14 @@ project "k"
 	kind "StaticLib"
 	language "C"
 	location "libc"
-	includedirs { "libc/include" }
+	prebuildcommands {
+		"mkdir -p %{wks.location}/sysroot/usr/include",
+		"cp -RT %{prj.location}/include %{wks.location}/sysroot/usr/include"
+	}
+	postbuildcommands {
+		"mkdir -p %{wks.location}/sysroot/usr/lib",
+		"cp %{cfg.buildtarget.relpath} %{wks.location}/sysroot/usr/lib"
+	}
 
 	files { "%{prj.location}/**.o",
 			"%{prj.location}/**.h",
