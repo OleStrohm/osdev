@@ -2,12 +2,13 @@
 #include <stdio.h>
 
 void irq0_handler(void) {
-	for(;;)
-		asm("hlt");
 	outb(0x20, 0x20); //EOI
 }
 
 void irq1_handler(void) {
+	extern unsigned char inb(unsigned char);
+	unsigned char scan_code = inb(0x60);
+	printf("heey: %i\n", scan_code);
 	outb(0x20, 0x20); //EOI
 }
 

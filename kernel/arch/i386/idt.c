@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 extern int exception_handler();
 extern int irq0();
@@ -47,16 +48,10 @@ void idt_init(void) {
 	printf("Setting up IDT\n");
 
 	extern void outb(uint8_t, uint8_t);
-	extern int load_idt();
+	extern int load_idt(uint32_t);
 
 	/* Null out all interrupts */
-	for(int i = 0; i < 256; i++) {
-		IDT[i].offset_lowerbits = 0;
-		IDT[i].offset_higherbits = 0;
-		IDT[i].selector = 0;
-		IDT[i].zero = 0;
-		IDT[i].type_attr = 0x0E;
-	}
+	memset(IDT, 0, sizeof(IDT));
 
 	/* Remapping the PIC */
 	/* 0x20 - master command
@@ -72,9 +67,41 @@ void idt_init(void) {
 	outb(0xA1, 0x2);  // Tell slave PIC its cascade identity (0000 0010)
 	outb(0x21, 0x1);  // Set 8086/88 mode
 	outb(0xA1, 0x1);  // Set 8086/88 mode     
-	outb(0x21, 0xFF);  // Master PIC interrupt masks
+	outb(0x21, 0xFD);  // Master PIC interrupt masks
 	outb(0xA1, 0xFF);  // Slave PIC interrupt masks
 
+	registerGateInterrupt(0, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(1, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(2, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(3, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(4, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(5, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(6, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(7, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(8, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(9, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(10, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(11, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(12, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(13, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(14, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(15, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(16, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(17, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(18, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(19, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(20, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(21, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(22, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(23, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(24, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(25, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(26, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(27, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(28, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(29, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(30, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(31, (uint32_t) exception_handler, 0x8);
 	registerGateInterrupt(32, (uint32_t) irq0, 0x8);
 	registerGateInterrupt(33, (uint32_t) irq1, 0x8);
 	registerGateInterrupt(34, (uint32_t) irq2, 0x8);
@@ -96,6 +123,8 @@ void idt_init(void) {
 	struct IDT_header idt_header;
 	idt_header.size = sizeof(IDT[0]) * 256 - 1;
 	idt_header.offset = (uint32_t) IDT;
+	printf("IDT: %X, %i\n", idt_header.offset, idt_header.size);
+	printf("IDT header size: %i\n", sizeof(idt_header));
 
-	load_idt(idt_header);
+	load_idt((uint32_t) &idt_header);
 }

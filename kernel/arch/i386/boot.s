@@ -28,15 +28,16 @@ _start:
 	
 	cli
 
+	# Call the global constructors.
+	call _init
+
 	call terminal_initialize
 
 	call setupGDT
 	call idt_init
 
-	#sti
-
-	# Call the global constructors.
-	call _init
+	sti
+	int $0x21
 
 	# Transfer control to the main kernel.
 	call kernel_main

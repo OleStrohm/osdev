@@ -1,5 +1,7 @@
 .intel_syntax noprefix
 
+.globl exception_handler
+
 .globl irq0
 .globl irq1
 .globl irq2
@@ -19,39 +21,11 @@
 
 .globl load_idt
 
-.globl irq0_handler
-.globl irq1_handler
-.globl irq2_handler
-.globl irq3_handler
-.globl irq4_handler
-.globl irq5_handler
-.globl irq6_handler
-.globl irq7_handler
-.globl irq8_handler
-.globl irq9_handler
-.globl irq10_handler
-.globl irq11_handler
-.globl irq12_handler
-.globl irq13_handler
-.globl irq14_handler
-.globl irq15_handler
-
-.extern irq0_handler
-.extern irq1_handler
-.extern irq2_handler
-.extern irq3_handler
-.extern irq4_handler
-.extern irq5_handler
-.extern irq6_handler
-.extern irq7_handler
-.extern irq8_handler
-.extern irq9_handler
-.extern irq10_handler
-.extern irq11_handler
-.extern irq12_handler
-.extern irq13_handler
-.extern irq14_handler
-.extern irq15_handler
+.globl inb
+inb:
+	mov dx, [esp+1]
+	in ax, dx
+	ret
 
 .globl outb
 outb:
@@ -59,6 +33,11 @@ outb:
 	mov dx, [esp+2]
 	out dx, al
 	ret
+
+exception_handler:
+	pusha
+	popa
+	iret
 
 irq0:
 	pusha
@@ -68,7 +47,6 @@ irq0:
 
 irq1:
 	pusha
-	hlt
 	call irq1_handler
 	popa
 	iret
@@ -158,6 +136,6 @@ irq15:
 	iret
 
 load_idt:
-	mov edx, [esp + 4]
-	lidt [edx]
+	mov eax, [esp + 4]
+	lidt [eax]
 	ret

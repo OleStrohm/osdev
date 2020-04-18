@@ -75,7 +75,7 @@ GENERATED += $(OBJDIR)/boot.o
 GENERATED += $(OBJDIR)/crti.o
 GENERATED += $(OBJDIR)/crtn.o
 GENERATED += $(OBJDIR)/gdt.o
-GENERATED += $(OBJDIR)/gdt_asm.o
+GENERATED += $(OBJDIR)/gdt1.o
 GENERATED += $(OBJDIR)/idt.o
 GENERATED += $(OBJDIR)/idt1.o
 GENERATED += $(OBJDIR)/interrupt.o
@@ -85,7 +85,7 @@ OBJECTS += $(OBJDIR)/boot.o
 OBJECTS += $(OBJDIR)/crti.o
 OBJECTS += $(OBJDIR)/crtn.o
 OBJECTS += $(OBJDIR)/gdt.o
-OBJECTS += $(OBJDIR)/gdt_asm.o
+OBJECTS += $(OBJDIR)/gdt1.o
 OBJECTS += $(OBJDIR)/idt.o
 OBJECTS += $(OBJDIR)/idt1.o
 OBJECTS += $(OBJDIR)/interrupt.o
@@ -166,7 +166,7 @@ $(OBJDIR)/crtn.o: arch/i386/crtn.s
 $(OBJDIR)/gdt.o: arch/i386/gdt.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/gdt_asm.o: arch/i386/gdt_asm.s
+$(OBJDIR)/gdt1.o: arch/i386/gdt.s
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/idt.o: arch/i386/idt.c

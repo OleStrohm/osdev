@@ -1,16 +1,10 @@
 .intel_syntax noprefix
 
-gdtr: .word 0 # for limit (size)
-	  .long 0 # for base (offset)
-
 .globl setGdt
 .type setGdt, @function
 setGdt:
-	MOV EAX, [esp + 4]
-	MOV [gdtr + 2], EAX
-	MOV AX, [ESP + 8]
-	MOV [gdtr], AX
-	LGDT [gdtr]
+	MOV EAX, [ESP+4]
+	LGDT [EAX]
 	RET
 
 .globl reloadSegments
