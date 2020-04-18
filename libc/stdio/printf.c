@@ -61,6 +61,69 @@ int printf(const char* restrict format, ...) {
 			if (!print(str, len))
 				return -1;
 			written += len;
+		} else if (*format == 'i') {
+			format++;
+			int i = (int) va_arg(parameters, int);
+			if (!maxrem) {
+				// TODO: set errno to EOVERFLOW
+				return -1;
+			}
+			int digit = 1000000000;
+			int foundNonZero = 0;
+			while (digit) {
+				int r = (i/digit) % 10;
+				if(r)
+					foundNonZero = 1;
+				i -= r * digit;
+				digit /= 10;
+				if(foundNonZero) {
+					char c = '0' + r;
+					if (!print(&c, sizeof(c)))
+						return -1;
+					written++;
+				}
+			}
+			if(!foundNonZero) {
+				char c = '0';
+				if (!print(&c, sizeof(c)))
+					return -1;
+				written++;
+			}
+		} else if (*format == 'X') {
+			format++;
+			const char* prefix = "0x";
+			size_t len = strlen(prefix);
+			if (!print(prefix, len))
+				return -1;
+			written += len;
+			int i = (int) va_arg(parameters, int);
+			if (!maxrem) {
+				// TODO: set errno to EOVERFLOW
+				return -1;
+			}
+			int digit = 32;
+			int foundNonZero = 0;
+			while (digit) {
+				int r = (i>>(digit-4)) & 0xF;
+				if(r)
+					foundNonZero = 1;
+				i -= r << (digit-4);
+				digit -= 4;
+				if(foundNonZero) {
+					char c = '0' + r;
+					if(r >= 10)
+						c += 'A' - '0' - 10;
+					if (!print(&c, sizeof(c)))
+						return -1;
+					written++;
+				}
+			}
+			if(!foundNonZero) {
+				char c = '0';
+				if (!print(&c, sizeof(c)))
+					return -1;
+				written++;
+			}
 		} else {
 			format = format_begun_at;
 			size_t len = strlen(format);

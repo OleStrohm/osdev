@@ -2,7 +2,8 @@
 #include <stdio.h>
 
 void irq0_handler(void) {
-	printf("hii\n");
+	for(;;)
+		asm("hlt");
 	outb(0x20, 0x20); //EOI
 }
 

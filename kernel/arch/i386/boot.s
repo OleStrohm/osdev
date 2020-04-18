@@ -28,9 +28,12 @@ _start:
 	
 	cli
 
-	call setupGDT
+	call terminal_initialize
 
+	call setupGDT
 	call idt_init
+
+	#sti
 
 	# Call the global constructors.
 	call _init

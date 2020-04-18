@@ -68,6 +68,7 @@ irq0:
 
 irq1:
 	pusha
+	hlt
 	call irq1_handler
 	popa
 	iret
@@ -159,5 +160,4 @@ irq15:
 load_idt:
 	mov edx, [esp + 4]
 	lidt [edx]
-	sti
 	ret
