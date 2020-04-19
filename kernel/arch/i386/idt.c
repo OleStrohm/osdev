@@ -3,7 +3,38 @@
 #include <stdio.h>
 #include <string.h>
 
-extern int exception_handler();
+extern int ex0();
+extern int ex1();
+extern int ex2();
+extern int ex3();
+extern int ex4();
+extern int ex5();
+extern int ex6();
+extern int ex7();
+extern int ex8();
+extern int ex9();
+extern int ex10();
+extern int ex11();
+extern int ex12();
+extern int ex13();
+extern int ex14();
+extern int ex15();
+extern int ex16();
+extern int ex17();
+extern int ex18();
+extern int ex19();
+extern int ex20();
+extern int ex21();
+extern int ex22();
+extern int ex23();
+extern int ex24();
+extern int ex25();
+extern int ex26();
+extern int ex27();
+extern int ex28();
+extern int ex29();
+extern int ex30();
+extern int ex31();
 extern int irq0();
 extern int irq1();
 extern int irq2();
@@ -67,41 +98,41 @@ void idt_init(void) {
 	outb(0xA1, 0x2);  // Tell slave PIC its cascade identity (0000 0010)
 	outb(0x21, 0x1);  // Set 8086/88 mode
 	outb(0xA1, 0x1);  // Set 8086/88 mode     
-	outb(0x21, 0xFD);  // Master PIC interrupt masks
+	outb(0x21, 0);  // Master PIC interrupt masks
 	outb(0xA1, 0xFF);  // Slave PIC interrupt masks
 
-	registerGateInterrupt(0, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(1, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(2, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(3, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(4, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(5, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(6, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(7, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(8, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(9, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(10, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(11, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(12, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(13, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(14, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(15, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(16, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(17, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(18, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(19, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(20, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(21, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(22, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(23, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(24, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(25, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(26, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(27, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(28, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(29, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(30, (uint32_t) exception_handler, 0x8);
-	registerGateInterrupt(31, (uint32_t) exception_handler, 0x8);
+	registerGateInterrupt(0, (uint32_t) ex0, 0x8);
+	registerGateInterrupt(1, (uint32_t) ex1, 0x8);
+	registerGateInterrupt(2, (uint32_t) ex2, 0x8);
+	registerGateInterrupt(3, (uint32_t) ex3, 0x8);
+	registerGateInterrupt(4, (uint32_t) ex4, 0x8);
+	registerGateInterrupt(5, (uint32_t) ex5, 0x8);
+	registerGateInterrupt(6, (uint32_t) ex6, 0x8);
+	registerGateInterrupt(7, (uint32_t) ex7, 0x8);
+	registerGateInterrupt(8, (uint32_t) ex8, 0x8);
+	registerGateInterrupt(9, (uint32_t) ex9, 0x8);
+	registerGateInterrupt(10, (uint32_t) ex10, 0x8);
+	registerGateInterrupt(11, (uint32_t) ex11, 0x8);
+	registerGateInterrupt(12, (uint32_t) ex12, 0x8);
+	registerGateInterrupt(13, (uint32_t) ex13, 0x8);
+	registerGateInterrupt(14, (uint32_t) ex14, 0x8);
+	registerGateInterrupt(15, (uint32_t) ex15, 0x8);
+	registerGateInterrupt(16, (uint32_t) ex16, 0x8);
+	registerGateInterrupt(17, (uint32_t) ex17, 0x8);
+	registerGateInterrupt(18, (uint32_t) ex18, 0x8);
+	registerGateInterrupt(19, (uint32_t) ex19, 0x8);
+	registerGateInterrupt(20, (uint32_t) ex20, 0x8);
+	registerGateInterrupt(21, (uint32_t) ex21, 0x8);
+	registerGateInterrupt(22, (uint32_t) ex22, 0x8);
+	registerGateInterrupt(23, (uint32_t) ex23, 0x8);
+	registerGateInterrupt(24, (uint32_t) ex24, 0x8);
+	registerGateInterrupt(25, (uint32_t) ex25, 0x8);
+	registerGateInterrupt(26, (uint32_t) ex26, 0x8);
+	registerGateInterrupt(27, (uint32_t) ex27, 0x8);
+	registerGateInterrupt(28, (uint32_t) ex28, 0x8);
+	registerGateInterrupt(29, (uint32_t) ex29, 0x8);
+	registerGateInterrupt(30, (uint32_t) ex30, 0x8);
+	registerGateInterrupt(31, (uint32_t) ex31, 0x8);
 	registerGateInterrupt(32, (uint32_t) irq0, 0x8);
 	registerGateInterrupt(33, (uint32_t) irq1, 0x8);
 	registerGateInterrupt(34, (uint32_t) irq2, 0x8);

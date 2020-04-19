@@ -1,14 +1,21 @@
 #include <kernel/interrupt.h>
 #include <stdio.h>
 
+int counter = 100;
+int seconds = 0;
+
 void irq0_handler(void) {
+	if (!--counter) {
+		printf("seconds: %i\n", seconds++);
+		counter = 100;
+	}
 	outb(0x20, 0x20); //EOI
 }
 
 void irq1_handler(void) {
 	extern unsigned char inb(unsigned char);
 	unsigned char scan_code = inb(0x60);
-	printf("heey: %i\n", scan_code);
+	printf("Scan code: %i\n", scan_code);
 	outb(0x20, 0x20); //EOI
 }
 

@@ -36,14 +36,13 @@ _start:
 	call setupGDT
 	call idt_init
 
+	call enablePIT
+
 	sti
-	int $0x21
 
 	# Transfer control to the main kernel.
 	call kernel_main
 
 	# Hang if kernel_main unexpectedly returns.
-	cli
-1:	hlt
-	jmp 1b
+	jmp .
 .size _start, . - _start

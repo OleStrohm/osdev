@@ -5,7 +5,8 @@
 void kernel_main(void) {
 	printf("\nEntered kernel\n");
 
-	for (;;) {
+	for(;;)
 		asm("hlt");
-	}
+
+	printf("Exiting Kernel\n");
 }
