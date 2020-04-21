@@ -35,8 +35,8 @@ DEFINES += -DDEBUG
 INCLUDES +=
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -ffreestanding -O2 -Wall -Wextra
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g --sysroot=/home/ole/workspace/os/sysroot -isystem=/usr/include -MD -c -g -ffreestanding -O2 -Wall -Wextra
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LIBS += ../build/k/bin/Debug/libk.a
 LDDEPS += ../build/k/bin/Debug/libk.a
@@ -81,6 +81,7 @@ GENERATED += $(OBJDIR)/idt.o
 GENERATED += $(OBJDIR)/idt1.o
 GENERATED += $(OBJDIR)/interrupt.o
 GENERATED += $(OBJDIR)/kernel.o
+GENERATED += $(OBJDIR)/keyboard.o
 GENERATED += $(OBJDIR)/pit.o
 GENERATED += $(OBJDIR)/tty.o
 OBJECTS += $(OBJDIR)/boot.o
@@ -93,6 +94,7 @@ OBJECTS += $(OBJDIR)/idt.o
 OBJECTS += $(OBJDIR)/idt1.o
 OBJECTS += $(OBJDIR)/interrupt.o
 OBJECTS += $(OBJDIR)/kernel.o
+OBJECTS += $(OBJDIR)/keyboard.o
 OBJECTS += $(OBJDIR)/pit.o
 OBJECTS += $(OBJDIR)/tty.o
 
@@ -192,6 +194,9 @@ $(OBJDIR)/tty.o: arch/i386/tty.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/kernel.o: kernel/kernel.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/keyboard.o: kernel/keyboard.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

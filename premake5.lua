@@ -7,7 +7,7 @@ targetdir "build/%{prj.name}/bin/%{cfg.buildcfg}"
 objdir "build/%{prj.name}/obj"
 
 filter { "action:gmake*" }
-	buildoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-MD -c -g -std=gnu11 -ffreestanding -O2 -Wall -Wextra" }
+	buildoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-MD -c -g -ffreestanding -O2 -Wall -Wextra" }
 	linkoptions { "--sysroot=/home/ole/workspace/os/sysroot", "-isystem=/usr/include", "-ffreestanding", "-O2", "-nostdlib", "-lgcc", "-lk" }
 
 filter { "configurations:Debug" }
