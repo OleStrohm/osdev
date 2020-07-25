@@ -20,7 +20,7 @@ cleancommands { "rm -rf %{wks.location}/build" }
 
 project "kernel"
 	kind "ConsoleApp"
-	language "C"
+	language "C++"
 	location "kernel"
 	linkoptions { "-T %{prj.location}/arch/i386/linker.ld", "%{prj.location}/arch/i386/crtbegin.o %{prj.location}/arch/i386/crtend.o" }
 	prebuildcommands {
