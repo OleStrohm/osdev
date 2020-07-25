@@ -3,9 +3,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-extern void outb(unsigned char, unsigned char);
+extern "C" void outb(unsigned char, unsigned char);
 
-void enablePIT() {
+extern "C" void enablePIT() {
 	printf("Enabling PIT\n");
 	outb(0x43, 0x34); // pit 0: binary-based rate generator 0b00 11 010 0 = 0x34
 	uint16_t reload_value = 11931;

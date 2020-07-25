@@ -17,8 +17,8 @@
 
 #define GDT_ENTRIES 5
 
-extern void reloadSegments();
-extern void setGdt(uint32_t desc);
+extern "C" void reloadSegments();
+extern "C" void setGdt(uint32_t desc);
 
 typedef struct
 {
@@ -50,7 +50,7 @@ void registerEntry(uint8_t i, uint32_t limit, uint32_t base, uint8_t access, uin
 	GDT[i].flags |= flags & 0xF0;
 }
 
-void setupGDT(void) {
+extern "C" void setupGDT(void) {
 	printf("Setting up GDT\n");
 	/*uint32_t GDT[] = {
 	  0x00000000, 0x00000000, 

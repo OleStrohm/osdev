@@ -3,54 +3,57 @@
 #include <stdio.h>
 #include <string.h>
 
-extern int ex0();
-extern int ex1();
-extern int ex2();
-extern int ex3();
-extern int ex4();
-extern int ex5();
-extern int ex6();
-extern int ex7();
-extern int ex8();
-extern int ex9();
-extern int ex10();
-extern int ex11();
-extern int ex12();
-extern int ex13();
-extern int ex14();
-extern int ex15();
-extern int ex16();
-extern int ex17();
-extern int ex18();
-extern int ex19();
-extern int ex20();
-extern int ex21();
-extern int ex22();
-extern int ex23();
-extern int ex24();
-extern int ex25();
-extern int ex26();
-extern int ex27();
-extern int ex28();
-extern int ex29();
-extern int ex30();
-extern int ex31();
-extern int irq0();
-extern int irq1();
-extern int irq2();
-extern int irq3();
-extern int irq4();
-extern int irq5();
-extern int irq6();
-extern int irq7();
-extern int irq8();
-extern int irq9();
-extern int irq10();
-extern int irq11();
-extern int irq12();
-extern int irq13();
-extern int irq14();
-extern int irq15();
+extern "C" void outb(uint8_t, uint8_t);
+extern "C" int load_idt(uint32_t);
+
+extern "C" int ex0();
+extern "C" int ex1();
+extern "C" int ex2();
+extern "C" int ex3();
+extern "C" int ex4();
+extern "C" int ex5();
+extern "C" int ex6();
+extern "C" int ex7();
+extern "C" int ex8();
+extern "C" int ex9();
+extern "C" int ex10();
+extern "C" int ex11();
+extern "C" int ex12();
+extern "C" int ex13();
+extern "C" int ex14();
+extern "C" int ex15();
+extern "C" int ex16();
+extern "C" int ex17();
+extern "C" int ex18();
+extern "C" int ex19();
+extern "C" int ex20();
+extern "C" int ex21();
+extern "C" int ex22();
+extern "C" int ex23();
+extern "C" int ex24();
+extern "C" int ex25();
+extern "C" int ex26();
+extern "C" int ex27();
+extern "C" int ex28();
+extern "C" int ex29();
+extern "C" int ex30();
+extern "C" int ex31();
+extern "C" int irq0();
+extern "C" int irq1();
+extern "C" int irq2();
+extern "C" int irq3();
+extern "C" int irq4();
+extern "C" int irq5();
+extern "C" int irq6();
+extern "C" int irq7();
+extern "C" int irq8();
+extern "C" int irq9();
+extern "C" int irq10();
+extern "C" int irq11();
+extern "C" int irq12();
+extern "C" int irq13();
+extern "C" int irq14();
+extern "C" int irq15();
 
 struct __attribute__((__packed__)) IDT_entry{
 	uint16_t offset_lowerbits;
@@ -75,11 +78,8 @@ void registerGateInterrupt(uint8_t interrupt, uint32_t base, uint16_t selector) 
 	IDT[interrupt].offset_higherbits = (base & 0xffff0000) >> 16;
 }
 
-void idt_init(void) {
+extern "C" void idt_init(void) {
 	printf("Setting up IDT\n");
-
-	extern void outb(uint8_t, uint8_t);
-	extern int load_idt(uint32_t);
 
 	/* Null out all interrupts */
 	memset(IDT, 0, sizeof(IDT));

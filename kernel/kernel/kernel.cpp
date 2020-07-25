@@ -7,15 +7,18 @@ struct Fig {
 	int y;
 };
 
+extern "C" void kernel_main(void);
+
 void kernel_main(void) {
-	printf("yeeehhh\n");
-	struct Fig r = {4, 7};
-	printf("fig: %ix%i", r.x, r.y);
+	printf("Started DevOS\n");
+
+	struct Fig r = { 4, 7 };
+	printf("Figure struct: %ix%i\n", r.x, r.y);
 
 	printf("\n");
 	while(1) {
-		if(isDown(S)) {
-			printf("yes\n");
+		if(isDown(Key::S)) {
+			printf("yaaaas\n");
 		} else {
 			printf("no\n");
 		}

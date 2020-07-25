@@ -1,4 +1,3 @@
 #!/bin/sh
 
-make
-./run.sh
+make && ./run.sh
